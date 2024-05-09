@@ -1,0 +1,153 @@
+{
+  "patient": {
+    "first_name": "Amorette",
+    "last_name": "Test",
+    "age": 27,
+    "sex": "Female",
+    "dob": "1996-12-26",
+    "phone": "352-678-8460",
+    "address": {
+      "street": "4800 Rowan Rd",
+      "city": "New Port Richey",
+      "state": "FL",
+      "zip": "34653"
+    }
+  },
+  "date_of_service": {
+    "chart_num": "09876",
+    "date_of_service": "2023-10-19"
+  },
+  "provider": {
+    "name": "Lisa Wolf, APRN",
+    "address": {
+      "street": "17222 HOSPITAL BLVD STE 120",
+      "city": "BROOKSVILLE",
+      "state": "FL",
+      "zip": "34601-8925"
+    },
+    "phone": "352-678-5550",
+    "fax": "352-678-5551"
+  },
+  "visit_diagnosis": {
+    "diagnoses": [
+      "F40.01 AGORAPHOBIA WITH PANIC DISORDER",
+      "F33.1 MAJOR DEPRESSIVE DISORDER, RECURRENT, MODERATE"
+    ],
+    "code": "99214",
+    "description": "Established Patient Office Visit - 30-39 minutes"
+  },
+  "solace_vital_signs": {
+    "happiness": "8/10",
+    "anxiety_stress": "5/10",
+    "suicidal_thoughts": "0/10",
+    "depression": "4/10",
+    "energy_level": "7/10",
+    "sleep_quality": "10/10",
+    "impulsivity": "1/10",
+    "mania": "0/10",
+    "psychotic_symptoms": "0/10",
+    "hours_of_sleep": 8,
+    "measurements": {
+      "height": 70,
+      "weight": 269,
+      "bmi": 38.6
+    }
+  },
+  "current_medications": {
+    "Seroquel": "100 mg, HS",
+    "Paxil": "10 mg, QD",
+    "Wellbutrin XL": "300 mg, QAM",
+    "trazodone": "50 mg, BID",
+    "sertraline": "100 mg, QD",
+    "Xanax": "1 mg, TID",
+    "Zoloft": "100 mg, QAM",
+    "Klonopin": "0.5 mg, QD"
+  },
+  "med_management_notes": {
+    "start_time": "10:17 AM",
+    "stop_time": "10:23 AM",
+    "total_time": "5 minutes",
+    "visit_type": "Medication check and follow-up",
+    "supervising_physician": "Dr. Chaudhry",
+    "chief_complaint": "Refills. 'Doing much better.'",
+    "history_of_present_illness": "States he had clots removed and vein is cleared out. 'My heart doctor is really happy. I have no clots.' States anxiety is 'down for me. It's down a lot.' States he and his service dog are happy again. Client started painting again. 'Things are going good.'"
+  },
+  "target_symptoms": {
+    "maintenance": "Focus on maintaining stability with medication compliance and monitoring for signs and symptoms of mental illness during medication management follow-up appointments."
+  },
+  "exam": {
+    "mental_status_exam": {
+      "general_appearance": "Casually dressed",
+      "hygiene": "Clean, well kept",
+      "attitude_behavior": "Calm and cooperative; pleasant",
+      "mood": "Happy",
+      "affect": "Bright. Mood Congruent",
+      "motor_exam": "Limited exam due to tele-health but grossly intact. BUE tremors",
+      "suicidal_ideation": "None reported",
+      "homicidal_ideation": "None reported",
+      "hallucination": "None reported",
+      "illusion_misperception": "None reported",
+      "delusion": "None reported",
+      "thought_process": "Linear, logical and goal oriented",
+      "sensorium": "Clear",
+      "executive_functioning": "Intact",
+      "abstract_thinking": "Suboptimal",
+      "insight_into_illness": "Limited",
+      "judgement": "Mildly impaired",
+      "reliability": "Questionable",
+      "cognition": "No gross deficits observed"
+    }
+  },
+  "treatment_plan": {
+    "health_safety_goals": {
+      "goal_1": "N/A: Domain not applicable at this time. Provider to reevaluate next session."
+    },
+    "behavioral_rel_goals": {
+      "goal_1": "N/A: Domain not applicable at this time. Provider to reevaluate next session."
+    },
+    "emotional_goals": {
+      "goal_1": {
+        "name": "FEAR/ANXIETY",
+        "description": "Client will reduce overall frequency, intensity, and duration of anxiety symptoms to improve daily functioning.",
+        "date_created": "2022-11-02",
+        "severity": "Moderate",
+        "improvement_target": "50%",
+        "time_to_resolution": "6 months",
+        "objective": [
+          "Learn/demonstrate understanding of Fight/Flight/Freeze distress",
+          "Learn/demonstrate 2-3 mindfulness techniques to manage symptoms"
+        ],
+        "interventions": [
+          "Client to attend regular medication management appointments and take prescriptions as prescribed"
+        ],
+        "comments": "States anxiety is down a lot."
+      }
+    },
+    "int_mental_goals": {
+      "goal_1": "N/A: Domain not applicable at this time. Provider to reevaluate next session."
+    },
+    "personal_goals": {
+      "goal_1": "N/A: Domain not applicable at this time. Provider to reevaluate next session."
+    },
+    "risk_assessment": {
+      "assessment": "No safety issues determined at this time. Continues to have risks inherent to disease state."
+    },
+    "lab_monitoring": {
+      "monitoring": "PCP monitors and client will notify Solace of any abnormal results."
+    },
+    "referrals": {
+      "referral_1": "Psychotherapy"
+    },
+    "follow_up": {
+      "plan": "Continue current treatment plan",
+      "next_appointment": "3 month(s)",
+      "treatment": "Continue current prescribed treatment with current NP. Medication management and psychotherapeutic interventions as needed (PRN). Prescribed Treatment: Continue current prescribed therapy."
+    }
+  },
+  "signature_info": {
+    "signed_by": "Lisa Wolf",
+    "title": "APRN",
+    "date_time": "2023-10-19 10:25 AM",
+    "license": "APRN11011057"
+  }
+}

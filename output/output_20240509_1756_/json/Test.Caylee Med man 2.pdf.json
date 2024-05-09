@@ -1,0 +1,146 @@
+{
+  "patient": {
+    "first_name": "Caylee",
+    "last_name": "Test",
+    "age": 25,
+    "sex": "Female",
+    "dob": "1998-07-30",
+    "phone": "727-255-9083",
+    "address": {
+      "street": "1234 TEST ROAD",
+      "city": "LAND O LAKES",
+      "state": "FL",
+      "zip": "34638"
+    }
+  },
+  "date_of_service": {
+    "chart_num": 123456,
+    "date_of_service": "2023-05-10"
+  },
+  "provider": {
+    "name": "Tanveer Chaudhry, MD",
+    "address": {
+      "street": "17222 HOSPITAL BLVD STE 120",
+      "city": "BROOKSVILLE",
+      "state": "FL",
+      "zip": "34601-8925"
+    },
+    "phone": "352-678-5550",
+    "fax": "352-678-5551"
+  },
+  "visit_diagnosis": {
+    "code": "F33.0",
+    "description": "Major Depressive Disorder Recurrent: Mild",
+    "procedure_code": "99214",
+    "procedure_description": "Established Patient Office Visit - 30-39 minutes"
+  },
+  "vital_signs": {
+    "happiness": "6/10",
+    "anxiety_stress": "1/10",
+    "suicidal_thoughts": "5/10",
+    "depression": "5/10",
+    "energy_level": "5/10",
+    "sleep_quality": "5/10",
+    "impulsivity": "5/10",
+    "mania": "5/10",
+    "psychotic_symptoms": "5/10",
+    "hours_of_sleep": 5,
+    "height": 60,
+    "weight": 230,
+    "bmi": 44.9
+  },
+  "current_meds": {
+    "Abilify": {
+      "dosage": "10 mg",
+      "frequency": "QAM"
+    }
+  },
+  "important_reactions": {
+    "Zyprexa": "Weight gain",
+    "Seroquel": "Weight gain",
+    "Latuda": "Grinding teeth"
+  },
+  "new_med_rec": {
+    "medications": [
+      {
+        "name": "Lamictal",
+        "dosage": "25mg x 2 weeks, then 50 mg x 2 weeks"
+      }
+    ]
+  },
+  "med_management_notes": {
+    "start_time": "11:22 AM",
+    "stop_time": "11:22 AM",
+    "total_time": "3 minutes",
+    "visit_type": "Medication check and follow-up",
+    "supervising_physician": "Dr. Chaudhry",
+    "chief_complaint": "Pt reports doing fine. No new complaints being reported at this time. No problem reported.",
+    "history_of_present_illness": "xx",
+    "interval_sentinel_events": "Suicide Attempt(s):x3 more than 5 years ago"
+  },
+  "target_symptoms": {
+    "mood_related_psychotic_symptoms": "Present"
+  },
+  "treatment_plan": {
+    "health_safety_goals": {
+      "goal_1": {
+        "description": "Client will reduce overall frequency, intensity, and duration of reported symptoms related to physical trauma.",
+        "date_created": "2022-08-13",
+        "severity": "Moderate",
+        "improvement_percentage": 25,
+        "time_to_resolution": "6 months",
+        "objective": "Learn/demonstrate understanding of Fight/Flight/Freeze distress.",
+        "interventions": [
+          "Client to attend regular medication management appointments and take prescriptions as prescribed.",
+          "Client to attend therapy sessions as prescribed."
+        ]
+      }
+    },
+    "behavioral_rel_goals": {
+      "goal_1": "N/A: Domain not applicable at this time. Provider to reevaluate next session."
+    },
+    "emotional_goals": {
+      "goal_1": {
+        "description": "FEAR/ANXIETY: Client will reduce overall frequency, intensity, and duration of anxiety symptoms to improve daily functioning.",
+        "date_created": "2022-08-13",
+        "severity": "Moderate",
+        "improvement_percentage": 50,
+        "time_to_resolution": "6 months",
+        "objective": "Learn/demonstrate understanding of Fight/Flight/Freeze distress.",
+        "interventions": [
+          "Client to attend regular medication management appointments and take prescriptions as prescribed.",
+          "Client to attend therapy sessions as prescribed."
+        ]
+      }
+    },
+    "int_mental_goals": {
+      "goal_1": "N/A: Domain not applicable at this time. Provider to reevaluate next session."
+    },
+    "personal_goals": {
+      "goal_1": "N/A: Domain not applicable at this time. Provider to reevaluate next session."
+    }
+  },
+  "risk_assessment": {
+    "notes": "Prior history of suicide attempts."
+  },
+  "lab_monitoring": {
+    "tests": [
+      "CMP",
+      "CBC with Diff.",
+      "HgbA1c",
+      "Lipid Panel"
+    ]
+  },
+  "referrals": "None at this time.",
+  "therapy": "No therapy",
+  "follow_up": {
+    "plan": "Continue current treatment plan.",
+    "prescribed_treatment": "Continue current prescribed therapy."
+  },
+  "signature_info": {
+    "signed_by": "Tanveer Chaudhry, MD",
+    "title": "MD",
+    "date_time": "2023-05-10 11:24 AM",
+    "license": "ME85148"
+  }
+}

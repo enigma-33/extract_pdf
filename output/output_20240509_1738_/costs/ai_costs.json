@@ -1,0 +1,37 @@
+[
+    {
+        "completion_tokens": 1085,
+        "prompt_tokens": 3682,
+        "total_tokens": 4767,
+        "total_cost": 0.0034685000000000002,
+        "successful_requests": 1
+    },
+    {
+        "completion_tokens": 826,
+        "prompt_tokens": 2913,
+        "total_tokens": 3739,
+        "total_cost": 0.0026955,
+        "successful_requests": 1
+    },
+    {
+        "completion_tokens": 1348,
+        "prompt_tokens": 3605,
+        "total_tokens": 4953,
+        "total_cost": 0.0038245000000000006,
+        "successful_requests": 1
+    },
+    {
+        "completion_tokens": 1227,
+        "prompt_tokens": 3498,
+        "total_tokens": 4725,
+        "total_cost": 0.0035895000000000002,
+        "successful_requests": 1
+    },
+    {
+        "completion_tokens": 1615,
+        "prompt_tokens": 3846,
+        "total_tokens": 5461,
+        "total_cost": 0.0043455,
+        "successful_requests": 1
+    }
+]

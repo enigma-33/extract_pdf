@@ -1,0 +1,164 @@
+{
+  "patient": {
+    "first_name": "Caylee",
+    "last_name": "Test",
+    "age": 25,
+    "sex": "Female",
+    "dob": "1998-07-30",
+    "phone": "727-255-9083",
+    "address": {
+      "street": "1234 TEST ROAD",
+      "city": "LAND O LAKES",
+      "state": "FL",
+      "zip": "34638"
+    }
+  },
+  "date_of_service": {
+    "chart_num": 123456,
+    "date_of_service": "2023-06-22"
+  },
+  "provider": {
+    "name": "Shodhan Patel, MD",
+    "address": {
+      "street": "4800 ROWAN ROAD",
+      "city": "NEW PORT RICHEY",
+      "state": "FL",
+      "zip": "34653-5609"
+    },
+    "phone": "352-678-5550",
+    "fax": "352-678-5551"
+  },
+  "visit_diagnosis": {
+    "code": "F33.0",
+    "description": "Major Depressive Disorder Recurrent: Mild"
+  },
+  "solace_vital_signs": {
+    "happiness": "6/10",
+    "anxiety_stress": "1/10",
+    "suicidal_thoughts": "5/10",
+    "depression": "5/10",
+    "energy_level": "5/10",
+    "sleep_quality": "5/10",
+    "impulsivity": "5/10",
+    "mania": "5/10",
+    "psychotic_symptoms": "5/10",
+    "hours_of_sleep": 5,
+    "measurements": {
+      "height": 60,
+      "weight": 230,
+      "bmi": 44.9
+    }
+  },
+  "current_medications": {
+    "Abilify": {
+      "dose": "10 mg",
+      "frequency": "QAM"
+    }
+  },
+  "important_reactions": {
+    "Zyprexa": "Weight gain",
+    "Seroquel": "Weight gain"
+  },
+  "side_effects_concerns": {
+    "Latuda": "Grinding teeth"
+  },
+  "psychiatric_medication_history": {
+    "historical_drug_use": "N/A",
+    "current_drug_use": "N/A"
+  },
+  "new_medication_recommendations": {
+    "Lamictal": {
+      "start": "25mg x 2 weeks, then 50 mg x 2 weeks"
+    }
+  },
+  "med_management_notes": {
+    "start_time": "10:42 AM",
+    "visit_type": "Medication check and follow-up. Video connection in patient's home",
+    "supervising_physician": "Self",
+    "chief_complaint": "Pt reports doing fine. No new complaints being reported at this time. No problem reported.",
+    "history_of_present_illness": "Interval sentinel events: Suicide Attempt(s): x3 more than 5 years ago"
+  },
+  "target_symptoms": {
+    "mood_related_psychotic_symptoms": "Present"
+  },
+  "exam": {
+    "mental_status_exam": {
+      "general_appearance": "Neatly dressed without notable distractions",
+      "hygiene": "Adequate attention to ADL's observed",
+      "motor_exam": "Limited exam due to tele-health but grossly intact",
+      "suicidal_ideation": "Suicidal thoughts endorsed with no intent or plans",
+      "homicidal_ideation": "Homicidal thoughts with intent, no plans reported",
+      "hallucination": "None reported",
+      "delusion": "None reported",
+      "thought_process": "Linear, logical and goal oriented",
+      "sensorium": "Clear",
+      "executive_functioning": "Intact",
+      "abstract_thinking": "Suboptimal",
+      "insight_into_illness": "Some denial",
+      "judgement": "Mildly impaired",
+      "reliability": "Questionable",
+      "cognition": "No gross deficits observed"
+    }
+  },
+  "current_allergies": {
+    "NKDA": "No known drug allergies"
+  },
+  "treatment_plan": {
+    "health_safety_goals": {
+      "goal_1": {
+        "description": "Client will reduce overall frequency, intensity, and duration of reported symptoms related to physical trauma",
+        "date_created": "2022-08-13",
+        "severity": "Moderate",
+        "improvement_percentage": 25,
+        "time_to_resolution": "6 months",
+        "objective": "Learn/demonstrate understanding of Fight/Flight/Freeze distress",
+        "interventions": [
+          "Client to attend regular medication management appointments and take prescriptions as prescribed",
+          "Client to attend therapy sessions as prescribed"
+        ]
+      }
+    },
+    "behavioral_rel_goals": {
+      "goal_1": "N/A: Domain not applicable at this time. Provider to reevaluate next session"
+    },
+    "emotional_goals": {
+      "goal_1": {
+        "description": "FEAR/ANXIETY: Client will reduce overall frequency, intensity, and duration of anxiety symptoms to improve daily functioning",
+        "date_created": "2022-08-13",
+        "severity": "Moderate",
+        "improvement_percentage": 50,
+        "time_to_resolution": "6 months",
+        "objective": "Learn/demonstrate understanding of Fight/Flight/Freeze distress",
+        "interventions": [
+          "Client to attend regular medication management appointments and take prescriptions as prescribed",
+          "Client to attend therapy sessions as prescribed"
+        ]
+      }
+    },
+    "intellectual_mental_goals": {
+      "goal_1": "N/A: Domain not applicable at this time. Provider to reevaluate next session"
+    },
+    "personal_goals": {
+      "goal_1": "N/A: Domain not applicable at this time. Provider to reevaluate next session"
+    }
+  },
+  "completed_goals_achievement": "No completed goals/achievements reported",
+  "risk_assessment": {
+    "assessment": "Prior history of suicide attempts"
+  },
+  "lab_monitoring": {
+    "tests": ["CMP", "CBC with Diff.", "HgbA1c", "Lipid Panel"],
+    "additional_info": "Patient having yearly bloodwork done for PCP and will bring in those results"
+  },
+  "referrals": {
+    "status": "None at this time"
+  },
+  "therapy": {
+    "status": "No therapy"
+  },
+  "follow_up": {
+    "treatment_plan": "Continue current treatment plan",
+    "next_appointment": "3 months",
+    "instructions": "Continue current prescribed treatment with current NP. Medication management and psychotherapeutic interventions as needed (PRN). Prescribed Treatment: Continue current prescribed therapy"
+  }
+}
