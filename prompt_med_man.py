@@ -196,7 +196,7 @@ denial. Judgement notes: Mildly impaired. Reliability notes: Questionable. Cogni
 notes: No gross deficits observed.
 
 Current Allergies: 
-NKDA <<< current_allergies (object)
+NKDA <<< current_allergies (object), current_allergies.allergies = NKDA
 
 TREATMENT PLAN: <<< treatment_plan (object)
 HEALTH AND SAFETY GOALS: <<< treatment_plan.health_safety_goals
