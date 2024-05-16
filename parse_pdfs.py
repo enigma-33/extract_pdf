@@ -9,12 +9,14 @@ import pypdf
 import json
 import os
 import time
-#import re
 import argparse
+import concurrent.futures
+
 
 # import the prompt definition
-from prompt_med_man import _prompt
-
+from prompt_med_man_mod_1 import _prompt
+from modules.output_struct import OutputStruct
+ 
 #########################################################
 ##
 #########################################################
@@ -43,10 +45,9 @@ def visitor_body(text, cm, tm, fontDict, fontSize):
 def extract_text_from_pdf(pdf_file_path):
     try:
         with open(pdf_file_path, 'rb') as file:
-            pdf_reader = pypdf.PdfReader(file)
-
             page_contents = []
 
+            pdf_reader = pypdf.PdfReader(file)
             for page in pdf_reader.pages:
                 ret = page.extract_text(visitor_text=visitor_body, extraction_mode="plain" )
                 page_contents.append(ret)
@@ -68,7 +69,7 @@ def convert_to_json(document_content):
         # prompt is defined in the prompt import file 
         system_message = _prompt
         with get_openai_callback() as cost:
-            chat = ChatOpenAI(model_name='gpt-3.5-turbo-0125', temperature=0.1, max_tokens=4096)
+            chat = ChatOpenAI(model_name='gpt-3.5-turbo-0125', temperature=0.0, max_tokens=4096)
             #chat = ChatOpenAI(model_name='gpt-4-turbo', temperature=0.0, max_tokens=4096)
             messages = [
                 SystemMessage(
@@ -112,35 +113,6 @@ def convert_to_csv(_json,filename):
     except Exception as e:
         return e
     
-#########################################################
-##
-#########################################################
-def prepare_output_dirs(init_path, prefix):
-    try:
-        session_output = init_path + "/output_" + prefix # + "/"
-        print("session_output ", session_output)
-
-        if not os.path.exists(init_path):
-            os.mkdir(init_path)
-
-        json_output = session_output + "/json"
-        csv_output = session_output + "/csv"
-        pfile_output = session_output + "/files_processed"
-        ffile_output = session_output + "/files_failto_process"
-        costs_output = session_output + "/costs"
-
-        os.mkdir(session_output)
-        os.mkdir(json_output)
-        os.mkdir(csv_output)
-        os.mkdir(pfile_output)
-        os.mkdir(ffile_output)
-        os.mkdir(costs_output)
-
-        return session_output
-    except Exception as e:
-        print(e)
-        return e
-
 
 #########################################################
 ##
@@ -156,19 +128,31 @@ def calculate_api_cost(cost_list):
         total_cost = 0.00
         for cost in cost_list:
             total_cost += cost["total_cost"]
-        
         return total_cost
     
     except Exception as e:
         print(e)
         return e
-    
+
+#########################################################
+##
+#########################################################
+def process_directory(file_toprocess_path, output_base_path=None):
+    try:
+        return True
+    except Exception as e:
+        print(e)
+        return e
+
 #########################################################
 ##
 #########################################################
 def process_file(file_toprocess_path, output_base_path=None):
     try:
+        print ( "...Processing  > ", file_toprocess_path)
+
         document_content = extract_text_from_pdf(file_toprocess_path)
+        #print(document_content)
 
         json_string, cost = convert_to_json(document_content)
 
@@ -202,7 +186,7 @@ def main(pdf_file_path):
 
         # Filters for files to be processed
         file_type = ".pdf"
-        pattern = r'med[\s_]man'
+        #pattern = r'med[\s_]man'
 
         # date time for filenames
         now = datetime.now() # current date and time
@@ -212,12 +196,8 @@ def main(pdf_file_path):
         # Prepare output directories
         # TODO: Clean this up
         output_base = "./output"
-        session_output_base_path = prepare_output_dirs(output_base, date_time)
-        json_output = session_output_base_path + "/json"
-        csv_output = session_output_base_path + "/csv"
-        pfile_output = session_output_base_path + "/files_processed"
-        ffile_output = session_output_base_path + "/files_failto_process"
-        costs_output = session_output_base_path + "/costs"
+        output = OutputStruct(output_base, date_time)
+        session_output_base_path = output.init_output_dir()
 
         # Check if the path is a directory
         if os.path.isdir(pdf_file_path):
@@ -230,9 +210,8 @@ def main(pdf_file_path):
             for file in files:
                 if file.lower().endswith(file_type):
                     #if re.search(pattern, file, re.IGNORECASE):
-                    print ( "Processing  > ", file)
                     
-                    json_obj, cost = process_file(pdf_file_path + file, json_output)
+                    json_obj, cost = process_file(pdf_file_path + file, output.get_json_full_path())
                     if cost is None:
                         ffiles_list.append(file)
                         print("... failed to process: ", file )
@@ -242,35 +221,33 @@ def main(pdf_file_path):
                         cost_list.append(cost)
 
         else:
-            json_obj, cost = process_file(pdf_file_path, json_output)
-            if cost is not None:
+            json_obj, cost = process_file(pdf_file_path, output.get_json_full_path())
+            if cost is  None:
+                ffiles_list.append(pdf_file_path)
+            else:   
                 pfiles_list.append(pdf_file_path)
                 json_list.append(json_obj)
                 cost_list.append(cost)
 
         # Create the output file
         output_file = date_time + "output.csv"
-        convert_to_csv(json_list,csv_output + "/" + output_file)
+        convert_to_csv(json_list,output.get_csv_full_path() + "/" + output_file)
 
         # write files processed
-        print("1")
-        fproc_file_path = pfile_output + "/" + "files_processed.json"
+        fproc_file_path = output.get_processed_full_path() + "/" + "files_processed.json"
         with open(fproc_file_path, "w") as outfile:
             outfile.write(json.dumps(pfiles_list,indent=4))
 
         # write files failed to processed
-        fproc_file_path = ffile_output + "/" + "files_failed_to_process.json"
+        fproc_file_path = output.get_failed_full_path() + "/" + "files_failed_to_process.json"
         with open(fproc_file_path, "w") as outfile:
             outfile.write(json.dumps(ffiles_list,indent=4))
 
         # write Open AI costs per call
-        costs_file_path = costs_output + "/" + "ai_costs.json"
+        costs_file_path = output.get_costs_full_path() + "/" + "ai_costs.json"
         with open(costs_file_path, "w") as outfile:
             outfile.write(json.dumps(cost_list,indent=4))
 
-        # Convert result dictionary to JSON
-        json_result = json.dumps(json_list, indent=4)
-        
         # Calculate Tokens and Cost estimate 
         total_cost = calculate_api_cost(cost_list)
         print ("api cost >>>", total_cost)
@@ -285,7 +262,7 @@ def main(pdf_file_path):
 #########################################################
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser(description='Process PDFs to parse contents into menaingful fields and values.')
+    parser = argparse.ArgumentParser(description='Process PDFs to parse contents into meaningful fields and values.')
     parser.add_argument('path',metavar='path',type=str, #is_valid_path, 
                     help='File name OR path to a list of files to parse.')
     parser.add_argument('-l', '--logfile',help="Logfile name")  
@@ -293,36 +270,16 @@ if __name__ == "__main__":
 
     pdf_file_path = args.path
     if pdf_file_path is None:
-        #pdf_file_path = f'/Users/epl/projects/enigma-33/solace_bh/data/pdf/med_man/Ayala.Mark Med Man.pdf'
-        #pdf_file_path = f'/Users/epl/projects/enigma-33/solace_bh/data/pdf/med_man/Cabral.Christine Med man.pdf'
-        #pdf_file_path = f'/Users/epl/projects/enigma-33/solace_bh/data/pdf/med_man/'
-        #pdf_file_path = f'/Users/epl/projects/enigma-33/solace_bh/data/pdf/med_man_test/'
-        #pdf_file_path = f'/Users/epl/projects/enigma-33/solace_bh/data/pdf/process/initial_list/history/batch_4/'
-        #pdf_file_path = f'/Users/epl/projects/enigma-33/solace_bh/data/pdf/process/initial_list/med_mgt/batch_4/'
-        #pdf_file_path = f'/Users/epl/projects/enigma-33/solace_bh/data/pdf/process/initial_list/therapy_note/'
-        #pdf_file_path = f'/Users/epl/projects/enigma-33/solace_bh/data/pdf/process/initial_list/med_mgt/batch_2/'
-        #pdf_file_path = f'/Users/epl/projects/enigma-33/solace_bh/data/pdf/process/initial_list/med_mgt/batch_3/'
-        #pdf_file_path = f'/Users/epl/projects/enigma-33/solace_bh/data/pdf/process/initial_list/med_mgt/batch_4/'
-        #pdf_file_path = f'/Users/epl/projects/enigma-33/solace_bh/data/pdf/process/initial_list/med_mgt/batch_5/'
-        #pdf_file_path = f'/Users/epl/projects/enigma-33/solace_bh/data/pdf/process/initial_list/med_mgt/batch_6/'
-        #pdf_file_path = f'/Users/epl/projects/enigma-33/solace_bh/data/pdf/process/initial_list/med_mgt/batch_7/'
         pdf_file_path = f'/Users/epl/projects/enigma-33/solace_bh/data/pdf/process/exception_list/initial_list/'
     #print(pdf_file_path)
     #is_valid_path(pdf_file_path)
     
     # TODO: 
-    # 1.    X Add single file or directory processing logic
-    # 2.    X Add output of json for each document (create directory and write .json based on file name)
-    # 3.    X Modify the token and cost calculator to be accurate
-    # 4.    X Add output of costs per document as well as a cumulative total.
-    # 5.    Add vectorization or security for PHI files. !!! 
-    # 6.    Create a prompt for the Initial Eval Old System
-    # 7.    X Find a way to make a consistent CSV file (or JSON schema which will ensure the csv consistency)
-    # 8.    Accept file pattern as main argument
-    # 9.    Accept prompt file name as argument and load dynamically??
-    # 10.   # Add proper exception handling
-    # 11.   Clean up code
-    # 12.   Add logging to file
+    # 1.    Add vectorization for security of PHI files. !!! 
+    # 2.    Create a prompt for the Initial Eval Old System
+    # 3.    Accept prompt file name as argument and load dynamically??
+    # 4.    Clean up code
+    # 5.    Add logging to file
     #
 
     # Start the timer
