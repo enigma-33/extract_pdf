@@ -3,8 +3,7 @@
 _prompt = """
 You analyze patient medical records to export them into a JSON format. 
 I will present you with a patient medical record and describe the individual JSON objects and properties with <<<. 
-<<< IGNORE means do not include in the JSON objects.
-You then create a JSON object from another product data sheet. 
+You then create a JSON object from another patient medical record. 
 [..] indicates that there could be multiple entries of a similar format, example goals (keep goal number).
 Parse addresses. 
 Format phone with dashes and no parens. 
@@ -13,6 +12,354 @@ Do NOT include Treatment plans.
 Do NOT include Follow up under Treatent plans.
 Do NOT include exam.
 Do include the JSON object even if it does not appear in the document.
+
+Apply the following schema to all JSON results.  Be sure to include all required elements:
+
+{
+  "type": "object",
+  "properties": {
+    "patient": {
+      "type": "object",
+      "properties": {
+        "first_name": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "age": {
+          "type": "number"
+        },
+        "sex": {
+          "type": "string"
+        },
+        "dob": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "address": {
+          "type": "object",
+          "properties": {
+            "street": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "state": {
+              "type": "string"
+            },
+            "zip": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "street",
+            "city",
+            "state",
+            "zip"
+          ]
+        }
+      },
+      "required": [
+        "first_name",
+        "last_name",
+        "age",
+        "sex",
+        "dob",
+        "phone",
+        "address"
+      ]
+    },
+    "date_of_service": {
+      "type": "object",
+      "properties": {
+        "chart_num": {
+          "type": "string"
+        },
+        "date_of_service": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "chart_num",
+        "date_of_service"
+      ]
+    },
+    "provider": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "address": {
+          "type": "object",
+          "properties": {
+            "street": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "state": {
+              "type": "string"
+            },
+            "zip": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "street",
+            "city",
+            "state",
+            "zip"
+          ]
+        },
+        "phone": {
+          "type": "string"
+        },
+        "fax": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "address",
+        "phone",
+        "fax"
+      ]
+    },
+    "visit_diagnosis": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "visit_type": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "supervising_physician": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "chief_complaint": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "history_present_illness": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "target_symptoms": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "solace_vital_signs": {
+      "type": "object",
+      "properties": {
+        "Happiness": {
+          "type": "string"
+        },
+        "Anxiety_Stress": {
+          "type": "string"
+        },
+        "Suicidal_Thoughts": {
+          "type": "string"
+        },
+        "Depression": {
+          "type": "string"
+        },
+        "Energy_Level": {
+          "type": "string"
+        },
+        "Sleep_quality": {
+          "type": "string"
+        },
+        "Impulsivity": {
+          "type": "string"
+        },
+        "Mania": {
+          "type": "string"
+        },
+        "Psychotic_symptoms": {
+          "type": "string"
+        },
+        "Hours_of_Sleep_at_Night": {
+          "type": "number"
+        },
+        "Measurements": {
+          "type": "object",
+          "properties": {
+            "Height": {
+              "type": "string"
+            },
+            "Weight": {
+              "type": "string"
+            },
+            "BMI": {
+              "type": "number"
+            },
+            "Waist_circumference": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "Height",
+            "Weight",
+            "BMI",
+            "Waist_circumference"
+          ]
+        }
+      },
+      "required": [
+        "Happiness",
+        "Anxiety_Stress",
+        "Suicidal_Thoughts",
+        "Depression",
+        "Energy_Level",
+        "Sleep_quality",
+        "Impulsivity",
+        "Mania",
+        "Psychotic_symptoms",
+        "Hours_of_Sleep_at_Night",
+        "Measurements"
+      ]
+    },
+    "current_medications": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "psychiatric_med_history": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "history_substance_use": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "historical_drug_use": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "current_drug_use": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "past_ivda": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "present_ivda": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "withdrawal_history": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "seizure_history": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "od_history": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "uds_results_history": {
+      "type": "string"
+    },
+    "pattern_of_use": {
+      "type": "string"
+    },
+    "consequences": {
+      "type": "string"
+    },
+    "treatment": {
+      "type": "string"
+    },
+    "comments": {
+      "type": "string"
+    },
+    "stage_of_change": {
+      "type": "string"
+    },
+    "new_med_recommendation": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "current_allergies": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "patient",
+    "date_of_service",
+    "provider",
+    "visit_diagnosis",
+    "visit_type",
+    "supervising_physician",
+    "chief_complaint",
+    "history_present_illness",
+    "target_symptoms",
+    "solace_vital_signs",
+    "current_medications",
+    "psychiatric_med_history",
+    "history_substance_use",
+    "historical_drug_use",
+    "current_drug_use",
+    "past_ivda",
+    "present_ivda",
+    "withdrawal_history",
+    "seizure_history",
+    "od_history",
+    "uds_results_history",
+    "pattern_of_use",
+    "consequences",
+    "treatment",
+    "comments",
+    "stage_of_change",
+    "new_med_recommendation",
+    "current_allergies"
+  ]
+}
 
 >>> Example patient medical record:
 
