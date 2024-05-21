@@ -16,390 +16,7 @@ Do NOT include Follow up under Treatent plans.
 Do NOT include exam.
 Do include the JSON object even if it does not appear in the document.
 
-Apply the following schema to all JSON results.  Enforce the schema strictly:
 
-{
-  "type": "object",
-  "properties": {
-    "patient": {
-      "type": "object",
-      "properties": {
-        "first_name": {
-          "type": "string"
-        },
-        "last_name": {
-          "type": "string"
-        },
-        "age": {
-          "type": "number"
-        },
-        "sex": {
-          "type": "string"
-        },
-        "dob": {
-          "type": "string"
-        },
-        "phone": {
-          "type": "string"
-        },
-        "address": {
-          "type": "object",
-          "properties": {
-            "street": {
-              "type": "string"
-            },
-            "city": {
-              "type": "string"
-            },
-            "state": {
-              "type": "string"
-            },
-            "zip": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "street",
-            "city",
-            "state",
-            "zip"
-          ]
-        }
-      },
-      "required": [
-        "first_name",
-        "last_name",
-        "age",
-        "sex",
-        "dob",
-        "phone",
-        "address"
-      ]
-    },
-    "date_of_service": {
-      "type": "object",
-      "properties": {
-        "chart_num": {
-          "type": "string"
-        },
-        "date_of_service": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "chart_num",
-        "date_of_service"
-      ]
-    },
-    "provider": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "address": {
-          "type": "object",
-          "properties": {
-            "street": {
-              "type": "string"
-            },
-            "city": {
-              "type": "string"
-            },
-            "state": {
-              "type": "string"
-            },
-            "zip": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "street",
-            "city",
-            "state",
-            "zip"
-          ]
-        },
-        "phone": {
-          "type": "string"
-        },
-        "fax": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "name",
-        "address",
-        "phone",
-        "fax"
-      ]
-    },
-    "visit_diagnosis": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "visit_type": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "supervising_physician": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "chief_complaint": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "history_present_illness": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "target_symptoms": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "risk_assessment": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "lab_monitoring": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "solace_vital_signs": {
-      "type": "object",
-      "properties": {
-        "Happiness": {
-          "type": "string"
-        },
-        "Anxiety_Stress": {
-          "type": "string"
-        },
-        "Suicidal_Thoughts": {
-          "type": "string"
-        },
-        "Depression": {
-          "type": "string"
-        },
-        "Energy_Level": {
-          "type": "string"
-        },
-        "Sleep_quality": {
-          "type": "string"
-        },
-        "Impulsivity": {
-          "type": "string"
-        },
-        "Mania": {
-          "type": "string"
-        },
-        "Psychotic_symptoms": {
-          "type": "string"
-        },
-        "Hours_of_Sleep_at_Night": {
-          "type": "number"
-        },
-        "Measurements": {
-          "type": "object",
-          "properties": {
-            "Height": {
-              "type": "string"
-            },
-            "Weight": {
-              "type": "string"
-            },
-            "BMI": {
-              "type": "number"
-            },
-            "Waist_circumference": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "Height",
-            "Weight",
-            "BMI",
-            "Waist_circumference"
-          ]
-        }
-      },
-      "required": [
-        "Happiness",
-        "Anxiety_Stress",
-        "Suicidal_Thoughts",
-        "Depression",
-        "Energy_Level",
-        "Sleep_quality",
-        "Impulsivity",
-        "Mania",
-        "Psychotic_symptoms",
-        "Hours_of_Sleep_at_Night",
-        "Measurements"
-      ]
-    },
-    "current_medications": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "medication": {
-            "type": "string"
-          },
-          "dosage": {
-            "type": "string"
-          },
-          "freq": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "medication",
-          "dosage",
-          "freq"
-        ]
-      }
-    },
-    "psychiatric_med_history": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "other_treatments": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "history_substance_use": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "historical_drug_use": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "current_drug_use": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "past_ivda": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "present_ivda": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "withdrawal_history": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "seizure_history": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "od_history": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "uds_results_history": {
-      "type": "string"
-    },
-    "pattern_of_use": {
-      "type": "string"
-    },
-    "consequences": {
-      "type": "string"
-    },
-    "treatment": {
-      "type": "string"
-    },
-    "comments": {
-      "type": "string"
-    },
-    "stage_of_change": {
-      "type": "string"
-    },
-    "new_med_recommendations": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "current_allergies": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    }
-  },
-  "required": [
-    "patient",
-    "date_of_service",
-    "provider",
-    "visit_diagnosis",
-    "visit_type",
-    "supervising_physician",
-    "chief_complaint",
-    "history_present_illness",
-    "target_symptoms",
-    "risk_assessment",
-    "lab_monitoring",
-    "solace_vital_signs",
-    "current_medications",
-    "psychiatric_med_history",
-    "other_treatments",
-    "history_substance_use",
-    "historical_drug_use",
-    "current_drug_use",
-    "past_ivda",
-    "present_ivda",
-    "withdrawal_history",
-    "seizure_history",
-    "od_history",
-    "uds_results_history",
-    "pattern_of_use",
-    "consequences",
-    "treatment",
-    "comments",
-    "stage_of_change",
-    "new_med_recommendations",
-    "current_allergies"
-  ]
-}
 
 >>> Example patient medical record:
 
@@ -457,9 +74,9 @@ CHILDHOOD-ONSET TYPE
 SEQUELA
  F90.0 ATTN-DEFCT HYPERACTIVITY
 DISORDER, PREDOM INATTENTIVE
-TYPEMED MANAGEMENT NOTE: <<< IGNORE
-E/M START & STOP TIMES: <<< IGNORE
-Start Time:  03:39 PM. Stop Time:  3:39 pm. Total E/M Time: 2 minutes. <<< IGNORE
+TYPEMED MANAGEMENT NOTE: 
+E/M START & STOP TIMES: 
+Start Time:  03:39 PM. Stop Time:  3:39 pm. Total E/M Time: 2 minutes. 
 VISIT TYPE: <<< visit_type (string[])
 The purpose of this visit was a medication check and follow-up. An in-person visit was
 conducted. <<< visit_type.[*] = The purpose of this visit was a medication check and follow-up. An in-person visit was
@@ -476,9 +93,9 @@ TARGET SYMPTOMS: <<< target_symptoms(string[])
 Maintenance: Will focus on maintaining stability with medication compliance and
 monitoring for signs and symptoms of mental illness during medication management
 follow-up appointments. <<< target_symptoms.[*]
-EXAM: <<< IGNORE
+EXAM: 
 RATING SCALES:
-MENTAL STATUS EXAM: General appearance notes: 2 Hygiene notes: 2 <<< IGNORE
+MENTAL STATUS EXAM: General appearance notes: 2 Hygiene notes: 2 
 Attitude/Behavior notes: 2 Mood notes: 2 Affect notes: 2 Motor exam notes: 2 Suicidal
 ideation notes: None reported at this time. Homicidal ideation notes: None reported at
 this time. Hallucination notes: None reported at this time. Illusion/Misperception notes:
@@ -487,10 +104,10 @@ reference notes: None reported at this time. Thought process notes: Linear, logi
 goal oriented. Sensorium: Clear. Executive functioning notes: Intact. Abstract thinking
 notes: Suboptimal. Insight into illness notes: Limited.  Judgement notes: Mildly
 impaired. Reliability notes: Questionable. Cognition notes: No gross deficits observed.
-MMSE SCORE: 2/30. <<< IGNORE
+MMSE SCORE: 2/30. 
 Notes: 2
-TREATMENT PLAN: <<< IGNORE
-HEALTH AND SAFETY GOALS: Goal 1: N/A: Domain not applicable at this time. Provider <<< IGNORE
+TREATMENT PLAN: 
+HEALTH AND SAFETY GOALS: Goal 1: N/A: Domain not applicable at this time. Provider 
 to reevaluate next session.
 PATIENT NAME: Amorette Test
 AGE: 27 years  SEX: Female
@@ -544,9 +161,9 @@ Klonopin, 0.5 mg, QD
 Important reactions to old meds: 2
 Side Effect(s) / concerns with 
 current meds: Denies SE. <<< current_medications.[*]
-BEHAVIORAL / RELATIONSHIP GOALS: Goal 1: N/A: Domain not applicable at this time. <<< IGNORE
+BEHAVIORAL / RELATIONSHIP GOALS: Goal 1: N/A: Domain not applicable at this time. 
 Provider to reevaluate next session.
-EMOTIONAL GOALS: Goal 1: FEAR/ANXIETY: Client will reduce overall frequency, <<< IGNORE
+EMOTIONAL GOALS: Goal 1: FEAR/ANXIETY: Client will reduce overall frequency, 
 intensity, and duration of anxiety symptoms to improve daily functioning. Date Created:
 11/2/2022. Severity: Mild. Would like patient to be improved by 25%. Time to
 Resolution: 6 months. Objective: Learn/demonstrate understanding of
@@ -555,25 +172,27 @@ Learn/demonstrate 2-3 mindfulness techniques to manage symptoms. Interventions:
 Client to attend regular medication management appointments and take prescriptions
 as prescribed.
 Client to attend therapy sessions as prescribed.
-INTELLECTUAL / MENTAL GOALS: Goal 1: N/A: Domain not applicable at this time. <<< IGNORE
+INTELLECTUAL / MENTAL GOALS: Goal 1: N/A: Domain not applicable at this time. 
 Provider to reevaluate next session.
-PERSONAL GOALS: Goal 1: N/A: Domain not applicable at this time. Provider to <<< IGNORE
+PERSONAL GOALS: Goal 1: N/A: Domain not applicable at this time. Provider to 
 reevaluate next session.
-COMPLETED GOALS / ACHIEVEMENT: <<< IGNORE
+COMPLETED GOALS / ACHIEVEMENT: <<< null
 RISK ASSESSMENT THIS VISIT: <<< risk_assessment(string[*])
 2 Continues to have risks inherent to disease state.
 Co-morbid substance use and abuse increases risk.
 Prior history of suicide attempts.
 Poor adherence to treatment recommendations.
-Co-morbid substance use and abuse increases risk. <<< risk_assessment.[*]
-OBJECTIVE TESTING RESULTS: 2 <<< risk_assessment.[*] = OBJECTIVE TESTING RESULTS: 2
-LAB MONITORING: <<< lab_monitoring(string[*])
+Co-morbid substance use and abuse increases risk. 
+OBJECTIVE TESTING RESULTS: 2 <<< risk_assessment.[*] 
+
+LAB MONITORING: N/A <<< lab_monitoring(string[*])
 PCP monitors and client will notify Solace of any abnormal results. <<< lab_monitoring.[*] = PCP monitors and client will notify Solace of any abnormal results.
-REFERRALS: <<< IGNORE
-Psychotherapy. <<< IGNORE
-THERAPY: <<< IGNORE
-No therapy <<< IGNORE
-FOLLOW-UP / TREATMENT PLAN REVIEW:  <<< IGNORE
+
+REFERRALS: 
+Psychotherapy. 
+THERAPY: 
+No therapy 
+FOLLOW-UP / TREATMENT PLAN REVIEW:  
 Appt made for 4 weeks.
 Continue current prescribed treatment with current NP.
 Medication management and psychotherapeutic interventions as needed (PRN).
@@ -629,7 +248,7 @@ Risperdal, Invega, Abilify, Aristada,
 Vivitrol, Ketamine, Spravato,
 Vitamin E, Melatonin, Diplin, NAC,
 Nerve Tonic, Calm Forte, <<< psychiatric_med_history.[*]
-Other Treatments: 2 <<< other_treatments(string[*]), other_treatments.[*] = 2
+Other Treatments: 2 <<< other_treatments(string[*]), other_treatments.[*]
 PATIENT NAME: Amorette Test
 AGE: 27 years  SEX: Female
 DOB: 12/26/1996
@@ -672,7 +291,7 @@ target symptoms, risks, benefits,
 SE, what to monitor for, and
 interactions. Client verbalized
 understanding of education
-provided. <<< IGNORE
+provided. 
 Current Allergies: <<< current_allergies(string[])
 No allergies on file <<< current_allergies[*]
 

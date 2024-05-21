@@ -3,6 +3,7 @@ from datetime import datetime
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
 from langchain_community.callbacks import get_openai_callback
+from collections import OrderedDict
 
 import pandas as pd
 import pypdf
@@ -10,6 +11,7 @@ import json
 import os
 import time
 import argparse
+import csv
 import concurrent.futures
 
 
@@ -94,24 +96,72 @@ def convert_to_json(document_content):
     except Exception as e:
         return e, None
 
+
 #########################################################
 ##
 #########################################################
-def convert_to_csv(_json,filename):
+def flatten_json(y, prefix=''):
+    out = {}
+    def flatten(x, name=''):
+        if type(x) is dict:
+            for a in x:
+                flatten(x[a], name + a + '.')
+        elif type(x) is list:
+            out[name[:-1]] = ', '.join(map(str, x))
+        else:
+            out[name[:-1]] = x
+    flatten(y, prefix)
+    return out
+
+#########################################################
+##
+#########################################################
+def collect_keys(data):
+    keys = set()
+    for item in data:
+        flat_item = flatten_json(item)
+        keys.update(flat_item.keys())
+    return keys
+
+#########################################################
+##
+#########################################################
+def convert_to_csv_alt(json_string,filename):
     try:
-        # Flatten the nested JSON data
-        df = pd.json_normalize(_json)
+        data = json.loads(json_string)
+        keys = collect_keys(data)
 
-        # Specify the path where you want to save the CSV file
-        csv_file_path = filename
-
-        # Convert the DataFrame to a CSV file
-        df.to_csv(csv_file_path, mode="w", index=False)
+        with open(filename, 'w', newline='') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=sorted(keys))
+            writer.writeheader()
+            for item in data:
+                flat_item = flatten_json(item)
+                writer.writerow(flat_item)
 
         return True
 
     except Exception as e:
-        return e
+        raise e
+
+#########################################################
+##
+#########################################################
+def convert_to_csv(json_string,filename):
+    try:
+        # Load JSON string
+        data = json.loads(json_string)
+
+        # Flatten JSON and create DataFrame
+        #df = pd.json_normalize(data, max_level=2, sep='.')
+        df = pd.json_normalize(data)
+
+        # Write DataFrame to CSV
+        df.to_csv(filename, index=False)
+
+        return True
+
+    except Exception as e:
+        raise e
     
 
 #########################################################
@@ -151,6 +201,9 @@ def process_file(file_toprocess_path, output_base_path=None):
     try:
         print ( "...Processing  > ", file_toprocess_path)
 
+        # Start the timer
+        pstart_time = time.time()
+
         document_content = extract_text_from_pdf(file_toprocess_path)
         #print(document_content)
 
@@ -165,7 +218,16 @@ def process_file(file_toprocess_path, output_base_path=None):
 
         # convert to object
         json_obj = json.loads(json_string)
-        
+
+        # Stop the timer
+        pend_time = time.time()
+
+        # Calculate the total time taken
+        ptotal_time = pend_time - pstart_time
+
+        # Print the total time taken
+        print("......Total time taken: {} seconds".format(ptotal_time))
+
         #print(cost)
         return json_obj, cost
     except Exception as e:
@@ -231,7 +293,8 @@ def main(pdf_file_path):
 
         # Create the output file
         output_file = date_time + "output.csv"
-        convert_to_csv(json_list,output.get_csv_full_path() + "/" + output_file)
+        json_string = json.dumps(json_list)
+        convert_to_csv_alt(json_string,output.get_csv_full_path() + "/" + output_file)
 
         # write files processed
         fproc_file_path = output.get_processed_full_path() + "/" + "files_processed.json"
@@ -255,6 +318,7 @@ def main(pdf_file_path):
         return json_list, cost_list, pfiles_list
 
     except Exception as e:
+        print("Exception thrown ===>", e)
         return e, None, None
 
 #########################################################
