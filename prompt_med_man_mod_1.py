@@ -4,19 +4,17 @@ _prompt = """
 You analyze patient medical records to export them into a JSON format. 
 I will present you with a patient medical record and describe the individual JSON objects and properties with <<<. 
 You then create a JSON object from another patient medical record. 
-[..] indicates that there could be multiple entries of a similar format, example goals (keep goal number).
 Parse addresses. 
 Format phone with dashes and no parens. 
 Format dates as YYYY-MM-DD. 
 Parse Medications. 
 Include Risk Assessment.
-Include Lab Montoring.
+Include Lab Monitoring.
 Do NOT include Treatment plans.
-Do NOT include Follow up under Treatent plans.
+Do NOT include Follow up under Treatment plans.
 Do NOT include exam.
-Do include the JSON object even if it does not appear in the document.
 
-Apply the following schema to all JSON results.  Enforce the schema strictly:
+Apply the following schema to all JSON results.  Enforce the schema strictly, only keys found in the schema:
 
 {
   "type": "object",
@@ -170,12 +168,6 @@ Apply the following schema to all JSON results.  Enforce the schema strictly:
         "type": "string"
       }
     },
-    "risk_assessment": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
     "lab_monitoring": {
       "type": "array",
       "items": {
@@ -213,7 +205,7 @@ Apply the following schema to all JSON results.  Enforce the schema strictly:
           "type": "string"
         },
         "Hours_of_Sleep_at_Night": {
-          "type": "number"
+          "type": "string"
         },
         "Measurements": {
           "type": "object",
@@ -225,7 +217,7 @@ Apply the following schema to all JSON results.  Enforce the schema strictly:
               "type": "string"
             },
             "BMI": {
-              "type": "number"
+              "type": "string"
             },
             "Waist_circumference": {
               "type": "string"
@@ -299,12 +291,6 @@ Apply the following schema to all JSON results.  Enforce the schema strictly:
         "type": "string"
       }
     },
-    "current_drug_use": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
     "past_ivda": {
       "type": "array",
       "items": {
@@ -335,22 +321,22 @@ Apply the following schema to all JSON results.  Enforce the schema strictly:
         "type": "string"
       }
     },
-    "uds_results_history": {
+    "hdu_uds_results_history": {
       "type": "string"
     },
-    "pattern_of_use": {
+    "hdu_pattern_of_use": {
       "type": "string"
     },
-    "consequences": {
+    "hdu_consequences": {
       "type": "string"
     },
-    "treatment": {
+    "hdu_treatment": {
       "type": "string"
     },
-    "comments": {
+    "hdu_comments": {
       "type": "string"
     },
-    "stage_of_change": {
+    "hdu_stage_of_change": {
       "type": "string"
     },
     "new_med_recommendations": {
@@ -376,7 +362,6 @@ Apply the following schema to all JSON results.  Enforce the schema strictly:
     "chief_complaint",
     "history_present_illness",
     "target_symptoms",
-    "risk_assessment",
     "lab_monitoring",
     "solace_vital_signs",
     "current_medications",
@@ -384,18 +369,17 @@ Apply the following schema to all JSON results.  Enforce the schema strictly:
     "other_treatments",
     "history_substance_use",
     "historical_drug_use",
-    "current_drug_use",
     "past_ivda",
     "present_ivda",
     "withdrawal_history",
     "seizure_history",
     "od_history",
-    "uds_results_history",
-    "pattern_of_use",
-    "consequences",
-    "treatment",
-    "comments",
-    "stage_of_change",
+    "hdu_uds_results_history",
+    "hdu_pattern_of_use",
+    "hdu_consequences",
+    "hdu_treatment",
+    "hdu_comments",
+    "hdu_stage_of_change",
     "new_med_recommendations",
     "current_allergies"
   ]
@@ -469,9 +453,11 @@ Office visit rendered today under the credentialed supervision of: N/A: Renderin
 self. <<< supervising_physician.[*]
 CHIEF COMPLAINT: <<< chief_complaint(string[])
 Depression, PTSD <<< chief_complaint.[*]
+
 HISTORY OF PRESENT ILLNESS: <<< history_present_illness(string[])
 2 
 INTERVAL SENTIANAL EVENTS: 2 <<< history_present_illness.[*]
+
 TARGET SYMPTOMS: <<< target_symptoms(string[])
 Maintenance: Will focus on maintaining stability with medication compliance and
 monitoring for signs and symptoms of mental illness during medication management
@@ -527,7 +513,7 @@ Sleep quality: 3/10. <<< solace_vital_signs.[*]
 Impulsivity: 5/10. <<< solace_vital_signs.[*]
 Mania: 2/10. <<< solace_vital_signs.[*]
 Psychotic symptoms: 4/10. <<< psychotic_symptoms(string[*]), psychotic_symptoms.[*] = 4/10
-Hours of Sleep at Night: 5. <<< solace_vital_signs.[*]
+Hours of Sleep at Night: 4-6. <<< solace_vital_signs.[*] = Hours_of_Sleep_at_Night: "4-6"
 MEASUREMENTS: Height: 55.00 in.<<< solace_vital_signs.[*]
 Weight: 145 lbs. BMI: 33.7. The
 patient's waist circumference is: 35
@@ -560,13 +546,13 @@ Provider to reevaluate next session.
 PERSONAL GOALS: Goal 1: N/A: Domain not applicable at this time. Provider to <<< IGNORE
 reevaluate next session.
 COMPLETED GOALS / ACHIEVEMENT: <<< IGNORE
-RISK ASSESSMENT THIS VISIT: <<< risk_assessment(string[*])
+RISK ASSESSMENT THIS VISIT: <<< IGNORE
 2 Continues to have risks inherent to disease state.
 Co-morbid substance use and abuse increases risk.
 Prior history of suicide attempts.
 Poor adherence to treatment recommendations.
-Co-morbid substance use and abuse increases risk. <<< risk_assessment.[*]
-OBJECTIVE TESTING RESULTS: 2 <<< risk_assessment.[*] = OBJECTIVE TESTING RESULTS: 2
+Co-morbid substance use and abuse increases risk. <<< IGNORE
+OBJECTIVE TESTING RESULTS: 2 <<< IGNORE
 LAB MONITORING: <<< lab_monitoring(string[*])
 PCP monitors and client will notify Solace of any abnormal results. <<< lab_monitoring.[*] = PCP monitors and client will notify Solace of any abnormal results.
 REFERRALS: <<< IGNORE
@@ -629,41 +615,40 @@ Risperdal, Invega, Abilify, Aristada,
 Vivitrol, Ketamine, Spravato,
 Vitamin E, Melatonin, Diplin, NAC,
 Nerve Tonic, Calm Forte, <<< psychiatric_med_history.[*]
+
 Other Treatments: 2 <<< other_treatments(string[*]), other_treatments.[*] = 2
-PATIENT NAME: Amorette Test
-AGE: 27 years  SEX: Female
-DOB: 12/26/1996
-17222 HOSPITAL BLVD STE 120
-BROOKSVILLE, FL 34601-8925
- Phone: (352) 678-5550 Fax: (352) 678-5551
-Page 4 of 4Patient has a history of substance
+
+Patient has a history of substance
 use.
 Patient has a history of substance
 use. <<< history_substance_use(string[]), history_substance_use.[*] 
+
 Historical Drug Use (if any): <<< historical_drug_use(string[])
 Caffeine, Nicotine, Alcohol, THC,
 Prescription, Cocaine, Opioids,
 Amphetamine, Meth, Ecstasy,
 Ketamine, PCP, Mushrooms,
-Inhalants, Steroids, LSD, GHB, DXM,
-Current Drug Use (if any): Caffeine,
+Inhalants, Steroids, LSD, GHB, DXM, <<< historical_drug_use[*] = Historical Drug Use (if any):
+Current Drug Use (if any):   <<< historical_drug_use.[*] = Current Drug Use (if any):
+Caffeine,
 Nicotine, Alcohol, THC,
 Prescription, Cocaine, Opioids,
 Amphetamine, Meth, Ecstasy,
 Ketamine, PCP, Mushrooms,
 Inhalants, Steroids, LSD, LSD, DXM,  <<< historical_drug_use.[*]
-Past IVDA: Yes <<< past_idva(string[]), past_idva.[*]
-Present: Yes  <<< present_idva(string[]), present_idva.[*]
+Past IVDA: Yes <<< past_ivda(string[]), past_ivda.[*]
+Present: Yes  <<< present_ivda(string[]), present_ivda.[*]
 The patient has a history of
-withdrawal. <<< withdrawal_history(string[]), <<< withdrawal_history.[*] 
-Patient has a history of seizures. <<< seizure_history(string[]), <<< seizure_history.[*]
-Patient has a history of OD.<<< od_history(string[]), <<< od_history.[*]
-UDS Results History: 2.
-Pattern of use: 2.
-Consequences: 2.
-Treatment: 2.
-Comments: 2.
-Stage of Change: 2.
+withdrawal. <<< withdrawal_history(string[]), withdrawal_history.[*] = The patient has a history of
+withdrawal.
+Patient has a history of seizures. <<< seizure_history(string[]), seizure_history.[*]
+Patient has a history of OD. <<< od_history(string[]), od_history.[*]
+UDS Results History: 2. <<< hdu_uds_results_history(string[*])
+Pattern of use: 2. <<< hdu_pattern_of_use(string[*])
+Consequences: 2. <<< hdu_consequences(string[*])
+Treatment: 2. <<< hdu_treatment(string[*])
+Comments: 2. <<< hdu_comments(string[*])
+Stage of Change: 2. <<< hdu_state_of_change(string[*])
 New Medication Recommendations: <<< new_med_recommendation(string[*])
 Continue meds as prescribed. <<< new_med_recommendation.[*]
 Client has been educated on
